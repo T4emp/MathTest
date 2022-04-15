@@ -8,12 +8,12 @@ namespace MathTest
     public partial class Form1 : Form
     {
         Random random = new Random();
+        SoundPlayer player = new SoundPlayer(Properties.Resources.correct);
         int addend1, addend2;
         int minuend, subtrahend;
         int multiplicand, multiplier;
         int dividend, divisor;
         int timeLeft;
-        bool timeEnd;
 
         public Form1()
         {
@@ -89,7 +89,6 @@ namespace MathTest
             }
             else
             {
-                timeEnd = true;
                 timer1.Stop();
                 timeLabel.Text = "Time's up!";
                 MessageBox.Show("You didn't finish in time.", "Sorry!");
@@ -112,15 +111,34 @@ namespace MathTest
             }
         }
 
-        private void answer_Sound(object sender, EventArgs e)
+        private void sum_ValueChanged(object sender, EventArgs e)
         {
-            if ((addend1 + addend2 == sum.Value)
-                | (minuend - subtrahend == difference.Value)
-                | (multiplicand * multiplier == product.Value)
-                | (dividend / divisor == quotient.Value)
-                && (timeEnd == false))
+            if (addend1 + addend2 == sum.Value & timeLeft > 0)
             {
-                SoundPlayer player = new SoundPlayer(Properties.Resources.correct);
+                player.Play();
+            }
+        }
+
+        private void difference_ValueChanged(object sender, EventArgs e)
+        {
+            if (minuend - subtrahend == difference.Value & timeLeft > 0)
+            {
+                player.Play();
+            }
+        }
+
+        private void product_ValueChanged(object sender, EventArgs e)
+        {
+            if (multiplicand * multiplier == product.Value & timeLeft > 0)
+            {
+                player.Play();
+            }
+        }
+
+        private void quotient_ValueChanged(object sender, EventArgs e)
+        {
+            if (dividend / divisor == quotient.Value & timeLeft > 0)
+            {
                 player.Play();
             }
         }
